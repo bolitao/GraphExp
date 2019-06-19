@@ -1,0 +1,51 @@
+﻿// Exp03View.h: CExp03View 类的接口
+//
+
+#pragma once
+
+
+class CExp03View : public CView {
+protected: // 仅从序列化创建
+    CExp03View() noexcept;
+DECLARE_DYNCREATE(CExp03View)
+
+    // 特性
+public:
+    CExp03Doc *GetDocument() const;
+    int C_S_Line(CDC *pDC, int x1, int y1, int x2, int y2);
+    void encode(int x, int y, int *code);
+
+    // 操作
+public:
+
+    // 重写
+public:
+    virtual void OnDraw(CDC *pDC); // 重写以绘制该视图
+    virtual BOOL PreCreateWindow(CREATESTRUCT &cs);
+protected:
+    virtual BOOL OnPreparePrinting(CPrintInfo *pInfo);
+    virtual void OnBeginPrinting(CDC *pDC, CPrintInfo *pInfo);
+    virtual void OnEndPrinting(CDC *pDC, CPrintInfo *pInfo);
+
+    // 实现
+public:
+    virtual ~CExp03View();
+#ifdef _DEBUG
+    virtual void AssertValid() const;
+    virtual void Dump(CDumpContext &dc) const;
+#endif
+
+protected:
+
+    // 生成的消息映射函数
+protected:
+    afx_msg void OnFilePrintPreview();
+    afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
+    afx_msg void OnContextMenu(CWnd *pWnd, CPoint point);
+DECLARE_MESSAGE_MAP()
+};
+
+#ifndef _DEBUG  // Exp03View.cpp 中的调试版本
+inline CExp03Doc* CExp03View::GetDocument() const
+   { return reinterpret_cast<CExp03Doc*>(m_pDocument); }
+#endif
